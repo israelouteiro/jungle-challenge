@@ -1,0 +1,11 @@
+apiVersion: 1
+providers:
+  - name: wagering
+    orgId: 1
+    folder: Jungle Gaming
+    type: file
+    disableDeletion: true
+    allowUiUpdates: false
+    updateIntervalSeconds: 10
+    options:
+      path: /var/lib/grafana/dashboards

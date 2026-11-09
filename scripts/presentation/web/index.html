@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Jungle Gaming · Apresentação</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <span class="mark">J</span>
+        <div>
+          <strong>JUNGLE GAMING</strong
+          ><small>Distributed Wagering Processor</small>
+        </div>
+      </div>
+      <div class="live"><span></span> Gráficos a cada 1 s · logs ao vivo</div>
+      <nav>
+        <a href="http://localhost:3000/docs/" target="_blank" rel="noreferrer"
+          >API ↗</a
+        ><a href="http://localhost:16686" target="_blank" rel="noreferrer"
+          >Traces ↗</a
+        ><a
+          href="http://localhost:3001/d/wagering-overview?refresh=1s"
+          target="_blank"
+          rel="noreferrer"
+          >Grafana ↗</a
+        >
+      </nav>
+    </header>
+    <main>
+      <section class="metrics" aria-label="Dashboard de métricas">
+        <iframe
+          id="dashboard"
+          title="Dashboard Grafana — métricas reais"
+        ></iframe>
+      </section>
+      <aside>
+        <div class="eyebrow">APRESENTAÇÃO LOCAL</div>
+        <h1>Execute. Observe.<br />Comprove.</h1>
+        <p class="intro">
+          Chamadas reais nas três réplicas. Os resultados aparecem nos gráficos
+          ao lado.
+        </p>
+        <section class="control" aria-labelledby="demo-title">
+          <h2 id="demo-title">01 <span>Demonstração financeira</span></h2>
+          <p>
+            Disputa por saldo, 50 duplicatas e referência fora de ordem. Confere
+            saldo e ledger ao final.
+          </p>
+          <button id="demo">Iniciar demonstração <span>↗</span></button>
+        </section>
+        <section class="control" aria-labelledby="load-title">
+          <h2 id="load-title">02 <span>Teste de carga</span></h2>
+          <p>
+            Sete cenários com Bun e oha, incluindo verificações financeiras e
+            drenagem da outbox.
+          </p>
+          <div class="fields">
+            <label
+              >Requisições / cenário<input
+                id="requests"
+                type="number"
+                min="20"
+                max="2000"
+                value="100" /></label
+            ><label
+              >Clientes simultâneos<input
+                id="concurrency"
+                type="number"
+                min="1"
+                max="50"
+                value="10"
+            /></label>
+          </div>
+          <button id="load" class="secondary">
+            Iniciar carga <span>↗</span>
+          </button>
+        </section>
+        <section class="execution" aria-labelledby="execution-title">
+          <div class="execution-heading">
+            <h2 id="execution-title">Execução</h2>
+            <span id="status" class="status">Aguardando</span>
+          </div>
+          <p id="detail">Selecione um cenário para começar.</p>
+          <pre id="logs" aria-label="Saída da execução">
+Os logs aparecerão aqui.</pre>
+          <p id="error" role="alert"></p>
+        </section>
+        <footer>
+          Uma execução por vez. Os dados criados ficam no ambiente local. Carga
+          não equivale a capacidade sustentável de produção.
+        </footer>
+      </aside>
+    </main>
+  </body>
+</html>

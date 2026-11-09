@@ -1,0 +1,278 @@
+:root {
+  color-scheme: dark;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  background: #101216;
+  color: #edf0f4;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+header {
+  height: 78px;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #2a2f36;
+  gap: 20px;
+}
+.brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.mark {
+  background: #b7ed70;
+  color: #14220b;
+  width: 36px;
+  height: 38px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  font-size: 25px;
+  font-weight: 900;
+}
+.brand strong {
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+.brand small {
+  display: block;
+  font-size: 11px;
+  color: #999fa9;
+  margin-top: 5px;
+}
+.live {
+  font-size: 12px;
+  color: #a9b2bc;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.live span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #b7ed70;
+  box-shadow: 0 0 10px #b7ed7050;
+}
+nav {
+  display: flex;
+  gap: 20px;
+}
+a {
+  color: #cad0d8;
+  font-size: 12px;
+  text-decoration: none;
+}
+a:hover {
+  color: #b7ed70;
+}
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 370px;
+  height: calc(100vh - 78px);
+}
+.metrics {
+  min-width: 0;
+  padding: 12px 0 0 12px;
+}
+iframe {
+  border: 0;
+  width: 100%;
+  height: 100%;
+  background: #111217;
+}
+aside {
+  padding: 26px 24px;
+  border-left: 1px solid #2a2f36;
+  overflow-y: auto;
+}
+.eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #b7ed70;
+}
+h1 {
+  font-size: 30px;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin: 14px 0;
+  font-weight: 650;
+}
+p {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #a1a9b5;
+}
+.intro {
+  margin: 0 0 24px;
+}
+.control {
+  border-top: 1px solid #2a2f36;
+  padding: 20px 0;
+}
+h2 {
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0;
+  color: #78828f;
+}
+h2 span {
+  color: #e7eaf0;
+  margin-left: 10px;
+}
+button {
+  width: 100%;
+  border: 1px solid #b7ed70;
+  background: #b7ed70;
+  border-radius: 5px;
+  padding: 12px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 650;
+  color: #192311;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+button:hover {
+  background: #cafa8e;
+}
+button.secondary {
+  border-color: #49573d;
+  color: #b7ed70;
+  background: #1c241a;
+}
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 12px 0;
+}
+label {
+  color: #a1a9b5;
+  font-size: 10px;
+}
+input {
+  width: 100%;
+  margin-top: 7px;
+  background: #15191f;
+  color: #edf0f4;
+  border: 1px solid #343c47;
+  border-radius: 4px;
+  padding: 9px;
+}
+input:focus,
+button:focus-visible {
+  outline: 2px solid #b7ed70;
+  outline-offset: 2px;
+}
+.execution {
+  border-top: 1px solid #2a2f36;
+  padding-top: 18px;
+}
+.execution-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.execution-heading h2 {
+  color: #edf0f4;
+}
+.status {
+  font-size: 10px;
+  color: #9da8b6;
+  background: #222830;
+  border-radius: 20px;
+  padding: 5px 9px;
+}
+.status.running {
+  color: #f3cc7a;
+  background: #3c321c;
+}
+.status.passed {
+  color: #b7ed70;
+  background: #26351a;
+}
+.status.failed {
+  color: #ff9c9c;
+  background: #3c2026;
+}
+#detail {
+  font-size: 10px;
+}
+pre {
+  height: 190px;
+  overflow: auto;
+  background: #090c10;
+  border: 1px solid #252d37;
+  border-radius: 5px;
+  padding: 12px;
+  font:
+    10px/1.6 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+  color: #bdc9d6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+#error {
+  color: #ff9c9c;
+}
+footer {
+  font-size: 10px;
+  line-height: 1.6;
+  color: #768190;
+  margin-top: 20px;
+}
+@media (max-width: 1000px) {
+  main {
+    grid-template-columns: minmax(0, 1fr) 330px;
+  }
+  aside {
+    padding: 22px 18px;
+  }
+  .live {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  header {
+    height: 68px;
+    padding: 0 16px;
+  }
+  nav {
+    gap: 10px;
+  }
+  .brand small {
+    display: none;
+  }
+  main {
+    display: flex;
+    flex-direction: column-reverse;
+    height: auto;
+  }
+  aside {
+    border-left: 0;
+    overflow: visible;
+  }
+  .metrics {
+    height: 900px;
+    padding: 0;
+  }
+}

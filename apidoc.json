@@ -1,0 +1,16 @@
+{
+  "name": "Distributed Wagering Processor",
+  "version": "1.0.0",
+  "description": "API financeira — carteiras, apostas e reconciliação",
+  "title": "Jungle Gaming · API",
+  "sampleUrl": false,
+  "header": {
+    "title": "Guia rápido",
+    "filename": "docs/API_GUIDE.md"
+  },
+  "order": ["Wallets", "Wagering", "Operations"],
+  "template": {
+    "withCompare": false,
+    "withGenerator": false
+  }
+}

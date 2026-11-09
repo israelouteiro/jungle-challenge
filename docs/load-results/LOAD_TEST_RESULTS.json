@@ -1,0 +1,2070 @@
+{
+  "schemaVersion": 3,
+  "runId": "16d60752-c83f-450a-bd15-fdb40f809b91",
+  "startedAt": "2026-11-08T20:17:25.969Z",
+  "parameters": {
+    "requestsPerScenario": 1000,
+    "concurrency": 20,
+    "p95LimitMs": 5000,
+    "sampleMs": 500,
+    "drainTimeoutMs": 60000,
+    "workersEnabled": true,
+    "expectDrain": true
+  },
+  "methodology": {
+    "model": "closed-loop",
+    "latency": "financial scenarios: Bun client clock including validation and failures; httpBenchmarks: oha native HTTP percentiles, transport errors reported separately",
+    "warmupRequests": 20,
+    "workload": "HTTP commands with asynchronous SQS outbox publishing; no SQS command ingestion benchmark",
+    "outboxLag": "age of oldest unpublished event, DB snapshot, max across replicas",
+    "lockConflicts": "delta of deadlock/serialization/lock-timeout counters summed across replicas; ordinary lock waits are not errors",
+    "peak": "sampled peaks are lower bounds, not continuous maxima"
+  },
+  "scenarios": {
+    "independentWallets": {
+      "requests": 1000,
+      "completed": 1000,
+      "elapsedMs": 1210.875916,
+      "throughputRps": 825.8484513453648,
+      "p50Ms": 22.359958000000006,
+      "p95Ms": 42.94733300000007,
+      "p99Ms": 52.37808300000006,
+      "errors": 0,
+      "errorRate": 0,
+      "statusCounts": {
+        "200": 1000
+      },
+      "lockConflicts": 0,
+      "retries": 0,
+      "duplicateDetections": 0,
+      "workerErrors": 0,
+      "outbox": {
+        "initialPending": 0,
+        "finalPending": 1880,
+        "sampledPeakPending": 1880,
+        "sampledPeakLagSeconds": 1.096257,
+        "finalLagSeconds": 1.096257
+      },
+      "errorExamples": []
+    },
+    "hotWallet": {
+      "requests": 1000,
+      "completed": 1000,
+      "elapsedMs": 3344.182167,
+      "throughputRps": 299.0267724850289,
+      "p50Ms": 47.12233400000059,
+      "p95Ms": 191.09941700000036,
+      "p99Ms": 314.5946670000003,
+      "errors": 0,
+      "errorRate": 0,
+      "statusCounts": {
+        "200": 1000
+      },
+      "lockConflicts": 0,
+      "retries": 0,
+      "duplicateDetections": 0,
+      "workerErrors": 0,
+      "outbox": {
+        "initialPending": 1880,
+        "finalPending": 3450,
+        "sampledPeakPending": 3450,
+        "sampledPeakLagSeconds": 4.131267,
+        "finalLagSeconds": 4.131267
+      },
+      "errorExamples": []
+    },
+    "idempotentReplays": {
+      "requests": 1000,
+      "completed": 1000,
+      "elapsedMs": 579.3869999999997,
+      "throughputRps": 1725.962094420483,
+      "p50Ms": 11.061125000000175,
+      "p95Ms": 17.812958999999864,
+      "p99Ms": 20.323750000000473,
+      "errors": 0,
+      "errorRate": 0,
+      "statusCounts": {
+        "200": 1000
+      },
+      "lockConflicts": 0,
+      "retries": 0,
+      "duplicateDetections": 999,
+      "workerErrors": 0,
+      "outbox": {
+        "initialPending": 3450,
+        "finalPending": 3372,
+        "sampledPeakPending": 3450,
+        "sampledPeakLagSeconds": 4.673786,
+        "finalLagSeconds": 4.673786
+      },
+      "errorExamples": []
+    },
+    "competingBets": {
+      "requests": 1000,
+      "completed": 1000,
+      "elapsedMs": 1896.3081250000005,
+      "throughputRps": 527.3404605593829,
+      "p50Ms": 26.211209000000963,
+      "p95Ms": 108.261625000001,
+      "p99Ms": 176.79529099999854,
+      "errors": 0,
+      "errorRate": 0,
+      "statusCounts": {
+        "200": 100,
+        "422": 900
+      },
+      "lockConflicts": 0,
+      "retries": 0,
+      "duplicateDetections": 0,
+      "workerErrors": 0,
+      "outbox": {
+        "initialPending": 3374,
+        "finalPending": 4224,
+        "sampledPeakPending": 4224,
+        "sampledPeakLagSeconds": 6.430371,
+        "finalLagSeconds": 6.430371
+      },
+      "errorExamples": []
+    }
+  },
+  "httpBenchmarks": {
+    "walletReads": {
+      "tool": "oha 1.16.0",
+      "requests": 1000,
+      "completed": 1000,
+      "errors": 0,
+      "errorRate": 0,
+      "elapsedMs": 140.850542,
+      "throughputRps": 7099.724188494781,
+      "p50Ms": 2.492917,
+      "p95Ms": 5.505792,
+      "p99Ms": 6.9462079999999995,
+      "statusCounts": {
+        "200": 1000
+      },
+      "transportErrors": {},
+      "rawReport": "artifacts/load/16d60752-c83f-450a-bd15-fdb40f809b91-oha-walletReads.json",
+      "lockConflicts": 0,
+      "duplicateDetections": 0,
+      "outbox": {
+        "finalPending": 4194,
+        "sampledPeakPending": 4224,
+        "sampledPeakLagSeconds": 6.680632
+      }
+    },
+    "ledgerReads": {
+      "tool": "oha 1.16.0",
+      "requests": 1000,
+      "completed": 1000,
+      "errors": 0,
+      "errorRate": 0,
+      "elapsedMs": 186.82325,
+      "throughputRps": 5352.652841656485,
+      "p50Ms": 3.412709,
+      "p95Ms": 6.804459,
+      "p99Ms": 7.777958,
+      "statusCounts": {
+        "200": 1000
+      },
+      "transportErrors": {},
+      "rawReport": "artifacts/load/16d60752-c83f-450a-bd15-fdb40f809b91-oha-ledgerReads.json",
+      "lockConflicts": 0,
+      "duplicateDetections": 0,
+      "outbox": {
+        "finalPending": 4164,
+        "sampledPeakPending": 4194,
+        "sampledPeakLagSeconds": 6.963558
+      }
+    },
+    "processedReplays": {
+      "tool": "oha 1.16.0",
+      "requests": 1000,
+      "completed": 1000,
+      "errors": 0,
+      "errorRate": 0,
+      "elapsedMs": 501.08925000000005,
+      "throughputRps": 1995.6524710917265,
+      "p50Ms": 9.772667,
+      "p95Ms": 16.905917,
+      "p99Ms": 19.652541999999997,
+      "statusCounts": {
+        "200": 1000
+      },
+      "transportErrors": {},
+      "rawReport": "artifacts/load/16d60752-c83f-450a-bd15-fdb40f809b91-oha-processedReplays.json",
+      "lockConflicts": 0,
+      "duplicateDetections": 1000,
+      "outbox": {
+        "finalPending": 4104,
+        "sampledPeakPending": 4164,
+        "sampledPeakLagSeconds": 7.541239
+      }
+    }
+  },
+  "tools": {
+    "financialChecks": "Bun fetch + explicit financial assertions",
+    "httpBenchmark": "oha 1.16.0",
+    "docs": "apiDoc (Bun CLI)"
+  },
+  "environment": {
+    "description": "Local macOS host, three Bun processes, native oha 1.16.0, Docker PostgreSQL/LocalStack/Jaeger; no concurrent builds or test suites",
+    "loadGenerator": {
+      "bun": "1.4.4",
+      "platform": "darwin",
+      "release": "25.6.0",
+      "arch": "arm64",
+      "logicalCpus": 10,
+      "cpuModel": "Apple M4",
+      "totalMemoryBytes": 17179869184
+    },
+    "tracing": {
+      "requested": true,
+      "sampleRatio": "1"
+    },
+    "target": "Three Bun processes on the load generator host",
+    "containers": {
+      "available": true,
+      "serverVersion": "29.2.1",
+      "arch": "aarch64",
+      "cpus": 10,
+      "memoryBytes": 8217317376
+    }
+  },
+  "database": {
+    "name": "load_16d60752c83f450abd15fdb40f809b91",
+    "version": "PostgreSQL 17.11 on aarch64-unknown-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit",
+    "initialState": "empty, migrations applied"
+  },
+  "broker": {
+    "implementation": "LocalStack",
+    "version": "4.10.0:5464ae3d8",
+    "isolatedQueues": true
+  },
+  "instances": [
+    "http://localhost:52723",
+    "http://localhost:52724",
+    "http://localhost:52725"
+  ],
+  "drain": {
+    "elapsedMs": 35753.245625,
+    "pending": 0,
+    "lagSeconds": 0
+  },
+  "finalMetrics": {
+    "elapsedMs": 45276.384416999994,
+    "lockConflicts": 0,
+    "duplicates": 1999,
+    "retries": 0,
+    "published": 5144,
+    "workerErrors": 0,
+    "outboxPending": 0,
+    "outboxLagSeconds": 0
+  },
+  "delivery": {
+    "expectedByScenario": {
+      "warmup": 40,
+      "independentWallets": 2000,
+      "hotWallet": 2000,
+      "idempotentReplays": 2,
+      "competingBets": 1102
+    },
+    "expectedUniqueEvents": 5144,
+    "published": 5144,
+    "pending": 0
+  },
+  "metricsSamples": [
+    {
+      "elapsedMs": 3.1965000000000146,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 0,
+      "workerErrors": 0,
+      "outboxPending": 0,
+      "outboxLagSeconds": 0
+    },
+    {
+      "elapsedMs": 202.88583399999993,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 18,
+      "workerErrors": 0,
+      "outboxPending": 22,
+      "outboxLagSeconds": 0.182382
+    },
+    {
+      "elapsedMs": 516.4561249999997,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 40,
+      "workerErrors": 0,
+      "outboxPending": 0,
+      "outboxLagSeconds": 0
+    },
+    {
+      "elapsedMs": 710.3534589999999,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 40,
+      "workerErrors": 0,
+      "outboxPending": 0,
+      "outboxLagSeconds": 0
+    },
+    {
+      "elapsedMs": 1023.3923749999999,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 40,
+      "workerErrors": 0,
+      "outboxPending": 0,
+      "outboxLagSeconds": 0
+    },
+    {
+      "elapsedMs": 1217.1554999999998,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 40,
+      "workerErrors": 0,
+      "outboxPending": 0,
+      "outboxLagSeconds": 0
+    },
+    {
+      "elapsedMs": 1264.6282499999998,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 40,
+      "workerErrors": 0,
+      "outboxPending": 0,
+      "outboxLagSeconds": 0
+    },
+    {
+      "elapsedMs": 1549.7905,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 66,
+      "workerErrors": 0,
+      "outboxPending": 232,
+      "outboxLagSeconds": 0.28067
+    },
+    {
+      "elapsedMs": 2057.059917,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 101,
+      "workerErrors": 0,
+      "outboxPending": 1084,
+      "outboxLagSeconds": 0.74516
+    },
+    {
+      "elapsedMs": 2477.4170839999997,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 160,
+      "workerErrors": 0,
+      "outboxPending": 1880,
+      "outboxLagSeconds": 1.096257
+    },
+    {
+      "elapsedMs": 2504.363417,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 160,
+      "workerErrors": 0,
+      "outboxPending": 1880,
+      "outboxLagSeconds": 1.12357
+    },
+    {
+      "elapsedMs": 2559.3724589999997,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 160,
+      "workerErrors": 0,
+      "outboxPending": 1914,
+      "outboxLagSeconds": 1.178462
+    },
+    {
+      "elapsedMs": 3062.2149170000002,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 220,
+      "workerErrors": 0,
+      "outboxPending": 2190,
+      "outboxLagSeconds": 1.615973
+    },
+    {
+      "elapsedMs": 3566.4119170000004,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 281,
+      "workerErrors": 0,
+      "outboxPending": 2456,
+      "outboxLagSeconds": 2.055311
+    },
+    {
+      "elapsedMs": 4083.022459,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 359,
+      "workerErrors": 0,
+      "outboxPending": 2686,
+      "outboxLagSeconds": 2.512408
+    },
+    {
+      "elapsedMs": 4585.780125,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 430,
+      "workerErrors": 0,
+      "outboxPending": 2894,
+      "outboxLagSeconds": 2.965565
+    },
+    {
+      "elapsedMs": 5088.922875,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 490,
+      "workerErrors": 0,
+      "outboxPending": 3148,
+      "outboxLagSeconds": 3.426849
+    },
+    {
+      "elapsedMs": 5593.962042,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 558,
+      "workerErrors": 0,
+      "outboxPending": 3352,
+      "outboxLagSeconds": 3.90075
+    },
+    {
+      "elapsedMs": 5852.994084,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 590,
+      "workerErrors": 0,
+      "outboxPending": 3450,
+      "outboxLagSeconds": 4.131267
+    },
+    {
+      "elapsedMs": 5859.0705,
+      "lockConflicts": 0,
+      "duplicates": 0,
+      "retries": 0,
+      "published": 590,
+      "workerErrors": 0,
+      "outboxPending": 3450,
+      "outboxLagSeconds": 4.138513
+    },
+    {
+      "elapsedMs": 6097.3803339999995,
+      "lockConflicts": 0,
+      "duplicates": 403,
+      "retries": 0,
+      "published": 620,
+      "workerErrors": 0,
+      "outboxPending": 3422,
+      "outboxLagSeconds": 4.361135
+    },
+    {
+      "elapsedMs": 6440.342084,
+      "lockConflicts": 0,
+      "duplicates": 999,
+      "retries": 0,
+      "published": 670,
+      "workerErrors": 0,
+      "outboxPending": 3372,
+      "outboxLagSeconds": 4.673786
+    },
+    {
+      "elapsedMs": 6446.381125,
+      "lockConflicts": 0,
+      "duplicates": 999,
+      "retries": 0,
+      "published": 670,
+      "workerErrors": 0,
+      "outboxPending": 3374,
+      "outboxLagSeconds": 4.679754
+    },
+    {
+      "elapsedMs": 6600.176292,
+      "lockConflicts": 0,
+      "duplicates": 999,
+      "retries": 0,
+      "published": 680,
+      "workerErrors": 0,
+      "outboxPending": 3472,
+      "outboxLagSeconds": 4.82961
+    },
+    {
+      "elapsedMs": 7104.134959,
+      "lockConflicts": 0,
+      "duplicates": 999,
+      "retries": 0,
+      "published": 741,
+      "workerErrors": 0,
+      "outboxPending": 3704,
+      "outboxLagSeconds": 5.292511
+    },
+    {
+      "elapsedMs": 7608.845334000001,
+      "lockConflicts": 0,
+      "duplicates": 999,
+      "retries": 0,
+      "published": 821,
+      "workerErrors": 0,
+      "outboxPending": 3896,
+      "outboxLagSeconds": 5.745839
+    },
+    {
+      "elapsedMs": 8111.807625,
+      "lockConflicts": 0,
+      "duplicates": 999,
+      "retries": 0,
+      "published": 890,
+      "workerErrors": 0,
+      "outboxPending": 4118,
+      "outboxLagSeconds": 6.20902
+    },
+    {
+      "elapsedMs": 8344.91775,
+      "lockConflicts": 0,
+      "duplicates": 999,
+      "retries": 0,
+      "published": 920,
+      "workerErrors": 0,
+      "outboxPending": 4224,
+      "outboxLagSeconds": 6.430371
+    },
+    {
+      "elapsedMs": 8348.785292,
+      "lockConflicts": 0,
+      "duplicates": 999,
+      "retries": 0,
+      "published": 920,
+      "workerErrors": 0,
+      "outboxPending": 4224,
+      "outboxLagSeconds": 6.433923
+    },
+    {
+      "elapsedMs": 8615.946375,
+      "lockConflicts": 0,
+      "duplicates": 999,
+      "retries": 0,
+      "published": 950,
+      "workerErrors": 0,
+      "outboxPending": 4194,
+      "outboxLagSeconds": 6.679006
+    },
+    {
+      "elapsedMs": 8616.548374999998,
+      "lockConflicts": 0,
+      "duplicates": 999,
+      "retries": 0,
+      "published": 950,
+      "workerErrors": 0,
+      "outboxPending": 4194,
+      "outboxLagSeconds": 6.680632
+    },
+    {
+      "elapsedMs": 8620.514625,
+      "lockConflicts": 0,
+      "duplicates": 999,
+      "retries": 0,
+      "published": 950,
+      "workerErrors": 0,
+      "outboxPending": 4194,
+      "outboxLagSeconds": 6.684666
+    },
+    {
+      "elapsedMs": 8910.424416999998,
+      "lockConflicts": 0,
+      "duplicates": 999,
+      "retries": 0,
+      "published": 980,
+      "workerErrors": 0,
+      "outboxPending": 4164,
+      "outboxLagSeconds": 6.963558
+    },
+    {
+      "elapsedMs": 8914.793709000001,
+      "lockConflicts": 0,
+      "duplicates": 999,
+      "retries": 0,
+      "published": 980,
+      "workerErrors": 0,
+      "outboxPending": 4164,
+      "outboxLagSeconds": 6.967378
+    },
+    {
+      "elapsedMs": 9120.345542,
+      "lockConflicts": 0,
+      "duplicates": 1169,
+      "retries": 0,
+      "published": 1010,
+      "workerErrors": 0,
+      "outboxPending": 4134,
+      "outboxLagSeconds": 7.154578
+    },
+    {
+      "elapsedMs": 9517.872500000001,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1040,
+      "workerErrors": 0,
+      "outboxPending": 4104,
+      "outboxLagSeconds": 7.541239
+    },
+    {
+      "elapsedMs": 9522.020334,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1040,
+      "workerErrors": 0,
+      "outboxPending": 4104,
+      "outboxLagSeconds": 7.544993
+    },
+    {
+      "elapsedMs": 9624.510333999999,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1070,
+      "workerErrors": 0,
+      "outboxPending": 4074,
+      "outboxLagSeconds": 7.634013
+    },
+    {
+      "elapsedMs": 10027.373959,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1115,
+      "workerErrors": 0,
+      "outboxPending": 4044,
+      "outboxLagSeconds": 8.021537
+    },
+    {
+      "elapsedMs": 10131.304875000002,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1130,
+      "workerErrors": 0,
+      "outboxPending": 4014,
+      "outboxLagSeconds": 8.11194
+    },
+    {
+      "elapsedMs": 10536.619209,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1166,
+      "workerErrors": 0,
+      "outboxPending": 3984,
+      "outboxLagSeconds": 8.501986
+    },
+    {
+      "elapsedMs": 10637.459209,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1190,
+      "workerErrors": 0,
+      "outboxPending": 3954,
+      "outboxLagSeconds": 8.591951
+    },
+    {
+      "elapsedMs": 11052.836959,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1220,
+      "workerErrors": 0,
+      "outboxPending": 3924,
+      "outboxLagSeconds": 8.988116
+    },
+    {
+      "elapsedMs": 11142.710167000001,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1250,
+      "workerErrors": 0,
+      "outboxPending": 3894,
+      "outboxLagSeconds": 9.064857
+    },
+    {
+      "elapsedMs": 11569.601999999999,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1280,
+      "workerErrors": 0,
+      "outboxPending": 3864,
+      "outboxLagSeconds": 9.467803
+    },
+    {
+      "elapsedMs": 11647.460125000001,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1310,
+      "workerErrors": 0,
+      "outboxPending": 3834,
+      "outboxLagSeconds": 9.535354
+    },
+    {
+      "elapsedMs": 12080.338917000001,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1340,
+      "workerErrors": 0,
+      "outboxPending": 3804,
+      "outboxLagSeconds": 9.943909
+    },
+    {
+      "elapsedMs": 12152.492375000002,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1370,
+      "workerErrors": 0,
+      "outboxPending": 3774,
+      "outboxLagSeconds": 10.001211
+    },
+    {
+      "elapsedMs": 12592.133375000001,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1400,
+      "workerErrors": 0,
+      "outboxPending": 3744,
+      "outboxLagSeconds": 10.424064
+    },
+    {
+      "elapsedMs": 12657.341124999999,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1430,
+      "workerErrors": 0,
+      "outboxPending": 3714,
+      "outboxLagSeconds": 10.48143
+    },
+    {
+      "elapsedMs": 13105.338458999999,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1460,
+      "workerErrors": 0,
+      "outboxPending": 3684,
+      "outboxLagSeconds": 10.904812
+    },
+    {
+      "elapsedMs": 13162.517042,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1490,
+      "workerErrors": 0,
+      "outboxPending": 3664,
+      "outboxLagSeconds": 10.965868
+    },
+    {
+      "elapsedMs": 13617.781917,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1520,
+      "workerErrors": 0,
+      "outboxPending": 3624,
+      "outboxLagSeconds": 11.396193
+    },
+    {
+      "elapsedMs": 13668.125625,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1543,
+      "workerErrors": 0,
+      "outboxPending": 3624,
+      "outboxLagSeconds": 11.449921
+    },
+    {
+      "elapsedMs": 14127.900667000002,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1580,
+      "workerErrors": 0,
+      "outboxPending": 3564,
+      "outboxLagSeconds": 11.879611
+    },
+    {
+      "elapsedMs": 14173.543792,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1595,
+      "workerErrors": 0,
+      "outboxPending": 3564,
+      "outboxLagSeconds": 11.927473
+    },
+    {
+      "elapsedMs": 14640.512625,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1640,
+      "workerErrors": 0,
+      "outboxPending": 3504,
+      "outboxLagSeconds": 12.365368
+    },
+    {
+      "elapsedMs": 14677.473999999998,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1649,
+      "workerErrors": 0,
+      "outboxPending": 3504,
+      "outboxLagSeconds": 12.403119
+    },
+    {
+      "elapsedMs": 15148.34675,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1700,
+      "workerErrors": 0,
+      "outboxPending": 3444,
+      "outboxLagSeconds": 12.842287
+    },
+    {
+      "elapsedMs": 15181.717292000001,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1730,
+      "workerErrors": 0,
+      "outboxPending": 3414,
+      "outboxLagSeconds": 12.863579
+    },
+    {
+      "elapsedMs": 15660.1485,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1760,
+      "workerErrors": 0,
+      "outboxPending": 3384,
+      "outboxLagSeconds": 13.328443
+    },
+    {
+      "elapsedMs": 15686.778167,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1769,
+      "workerErrors": 0,
+      "outboxPending": 3384,
+      "outboxLagSeconds": 13.356008
+    },
+    {
+      "elapsedMs": 16173.641834000002,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1820,
+      "workerErrors": 0,
+      "outboxPending": 3324,
+      "outboxLagSeconds": 13.819907
+    },
+    {
+      "elapsedMs": 16192.172542,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1832,
+      "workerErrors": 0,
+      "outboxPending": 3324,
+      "outboxLagSeconds": 13.841662
+    },
+    {
+      "elapsedMs": 16686.657959,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1880,
+      "workerErrors": 0,
+      "outboxPending": 3264,
+      "outboxLagSeconds": 14.295672
+    },
+    {
+      "elapsedMs": 16698.296292,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1886,
+      "workerErrors": 0,
+      "outboxPending": 3264,
+      "outboxLagSeconds": 14.312229
+    },
+    {
+      "elapsedMs": 17191.480209,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1955,
+      "workerErrors": 0,
+      "outboxPending": 3204,
+      "outboxLagSeconds": 14.771176
+    },
+    {
+      "elapsedMs": 17203.119042000002,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 1966,
+      "workerErrors": 0,
+      "outboxPending": 3204,
+      "outboxLagSeconds": 14.78271
+    },
+    {
+      "elapsedMs": 17699.333084,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2003,
+      "workerErrors": 0,
+      "outboxPending": 3144,
+      "outboxLagSeconds": 15.242241
+    },
+    {
+      "elapsedMs": 17707.821667,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2007,
+      "workerErrors": 0,
+      "outboxPending": 3144,
+      "outboxLagSeconds": 15.252398
+    },
+    {
+      "elapsedMs": 18215.446167000002,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2060,
+      "workerErrors": 0,
+      "outboxPending": 3084,
+      "outboxLagSeconds": 15.694055
+    },
+    {
+      "elapsedMs": 18218.933709,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2063,
+      "workerErrors": 0,
+      "outboxPending": 3084,
+      "outboxLagSeconds": 15.704188
+    },
+    {
+      "elapsedMs": 18730.055542000002,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2120,
+      "workerErrors": 0,
+      "outboxPending": 3024,
+      "outboxLagSeconds": 16.145238
+    },
+    {
+      "elapsedMs": 18733.452792,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2120,
+      "workerErrors": 0,
+      "outboxPending": 3024,
+      "outboxLagSeconds": 16.151249
+    },
+    {
+      "elapsedMs": 19244.191167,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2180,
+      "workerErrors": 0,
+      "outboxPending": 2964,
+      "outboxLagSeconds": 16.581672
+    },
+    {
+      "elapsedMs": 19249.631542,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2180,
+      "workerErrors": 0,
+      "outboxPending": 2964,
+      "outboxLagSeconds": 16.584946
+    },
+    {
+      "elapsedMs": 19759.607417,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2240,
+      "workerErrors": 0,
+      "outboxPending": 2904,
+      "outboxLagSeconds": 16.992829
+    },
+    {
+      "elapsedMs": 19764.414084,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2240,
+      "workerErrors": 0,
+      "outboxPending": 2904,
+      "outboxLagSeconds": 17.00006
+    },
+    {
+      "elapsedMs": 20273.809334,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2300,
+      "workerErrors": 0,
+      "outboxPending": 2844,
+      "outboxLagSeconds": 17.432143
+    },
+    {
+      "elapsedMs": 20276.274334,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2300,
+      "workerErrors": 0,
+      "outboxPending": 2844,
+      "outboxLagSeconds": 17.435854
+    },
+    {
+      "elapsedMs": 20786.56925,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2360,
+      "workerErrors": 0,
+      "outboxPending": 2784,
+      "outboxLagSeconds": 17.844236
+    },
+    {
+      "elapsedMs": 20792.741667000002,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2360,
+      "workerErrors": 0,
+      "outboxPending": 2784,
+      "outboxLagSeconds": 17.84855
+    },
+    {
+      "elapsedMs": 21304.509167,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2420,
+      "workerErrors": 0,
+      "outboxPending": 2724,
+      "outboxLagSeconds": 18.269165
+    },
+    {
+      "elapsedMs": 21308.777084,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2420,
+      "workerErrors": 0,
+      "outboxPending": 2724,
+      "outboxLagSeconds": 18.277468
+    },
+    {
+      "elapsedMs": 21826.716834000003,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2480,
+      "workerErrors": 0,
+      "outboxPending": 2664,
+      "outboxLagSeconds": 18.702295
+    },
+    {
+      "elapsedMs": 21839.688292000003,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2480,
+      "workerErrors": 0,
+      "outboxPending": 2664,
+      "outboxLagSeconds": 18.712617
+    },
+    {
+      "elapsedMs": 22332.12325,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2540,
+      "workerErrors": 0,
+      "outboxPending": 2604,
+      "outboxLagSeconds": 19.116148
+    },
+    {
+      "elapsedMs": 22343.939167,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2540,
+      "workerErrors": 0,
+      "outboxPending": 2604,
+      "outboxLagSeconds": 19.128274
+    },
+    {
+      "elapsedMs": 22841.71,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2600,
+      "workerErrors": 0,
+      "outboxPending": 2544,
+      "outboxLagSeconds": 19.533938
+    },
+    {
+      "elapsedMs": 22853.963542,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2601,
+      "workerErrors": 0,
+      "outboxPending": 2544,
+      "outboxLagSeconds": 19.544781
+    },
+    {
+      "elapsedMs": 23352.739667,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2660,
+      "workerErrors": 0,
+      "outboxPending": 2484,
+      "outboxLagSeconds": 19.940907
+    },
+    {
+      "elapsedMs": 23363.977667,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2660,
+      "workerErrors": 0,
+      "outboxPending": 2484,
+      "outboxLagSeconds": 19.952547
+    },
+    {
+      "elapsedMs": 23863.975542,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2720,
+      "workerErrors": 0,
+      "outboxPending": 2424,
+      "outboxLagSeconds": 20.367146
+    },
+    {
+      "elapsedMs": 23875.642959,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2720,
+      "workerErrors": 0,
+      "outboxPending": 2424,
+      "outboxLagSeconds": 20.37655
+    },
+    {
+      "elapsedMs": 24380.967125,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2780,
+      "workerErrors": 0,
+      "outboxPending": 2364,
+      "outboxLagSeconds": 20.789851
+    },
+    {
+      "elapsedMs": 24386.898625,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2780,
+      "workerErrors": 0,
+      "outboxPending": 2364,
+      "outboxLagSeconds": 20.802487
+    },
+    {
+      "elapsedMs": 24898.418209,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2840,
+      "workerErrors": 0,
+      "outboxPending": 2304,
+      "outboxLagSeconds": 21.191717
+    },
+    {
+      "elapsedMs": 24903.0885,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2840,
+      "workerErrors": 0,
+      "outboxPending": 2304,
+      "outboxLagSeconds": 21.194181
+    },
+    {
+      "elapsedMs": 25415.092625,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2900,
+      "workerErrors": 0,
+      "outboxPending": 2244,
+      "outboxLagSeconds": 21.602948
+    },
+    {
+      "elapsedMs": 25416.11875,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2900,
+      "workerErrors": 0,
+      "outboxPending": 2244,
+      "outboxLagSeconds": 21.610333
+    },
+    {
+      "elapsedMs": 25928.396667,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2960,
+      "workerErrors": 0,
+      "outboxPending": 2184,
+      "outboxLagSeconds": 22.017768
+    },
+    {
+      "elapsedMs": 25933.022084,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 2962,
+      "workerErrors": 0,
+      "outboxPending": 2184,
+      "outboxLagSeconds": 22.026953
+    },
+    {
+      "elapsedMs": 26441.424167,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3021,
+      "workerErrors": 0,
+      "outboxPending": 2124,
+      "outboxLagSeconds": 22.443534
+    },
+    {
+      "elapsedMs": 26443.786292,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3023,
+      "workerErrors": 0,
+      "outboxPending": 2124,
+      "outboxLagSeconds": 22.449172
+    },
+    {
+      "elapsedMs": 26957.87625,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3080,
+      "workerErrors": 0,
+      "outboxPending": 2064,
+      "outboxLagSeconds": 22.852171
+    },
+    {
+      "elapsedMs": 26968.449459,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3084,
+      "workerErrors": 0,
+      "outboxPending": 2064,
+      "outboxLagSeconds": 22.870119
+    },
+    {
+      "elapsedMs": 27467.489667,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3149,
+      "workerErrors": 0,
+      "outboxPending": 2004,
+      "outboxLagSeconds": 23.273901
+    },
+    {
+      "elapsedMs": 27473.680084,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3154,
+      "workerErrors": 0,
+      "outboxPending": 2004,
+      "outboxLagSeconds": 23.285135
+    },
+    {
+      "elapsedMs": 27973.298000000003,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3219,
+      "workerErrors": 0,
+      "outboxPending": 1944,
+      "outboxLagSeconds": 23.693588
+    },
+    {
+      "elapsedMs": 27980.131125,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3224,
+      "workerErrors": 0,
+      "outboxPending": 1944,
+      "outboxLagSeconds": 23.700793
+    },
+    {
+      "elapsedMs": 28479.003917000002,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3270,
+      "workerErrors": 0,
+      "outboxPending": 1884,
+      "outboxLagSeconds": 24.089363
+    },
+    {
+      "elapsedMs": 28490.007167,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3275,
+      "workerErrors": 0,
+      "outboxPending": 1884,
+      "outboxLagSeconds": 24.099053
+    },
+    {
+      "elapsedMs": 28984.909042,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3326,
+      "workerErrors": 0,
+      "outboxPending": 1824,
+      "outboxLagSeconds": 24.484677
+    },
+    {
+      "elapsedMs": 28995.637542,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3333,
+      "workerErrors": 0,
+      "outboxPending": 1824,
+      "outboxLagSeconds": 24.495074
+    },
+    {
+      "elapsedMs": 29494.307375,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3382,
+      "workerErrors": 0,
+      "outboxPending": 1764,
+      "outboxLagSeconds": 24.868762
+    },
+    {
+      "elapsedMs": 29502.263292,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3385,
+      "workerErrors": 0,
+      "outboxPending": 1764,
+      "outboxLagSeconds": 24.877336
+    },
+    {
+      "elapsedMs": 30002.938875,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3443,
+      "workerErrors": 0,
+      "outboxPending": 1704,
+      "outboxLagSeconds": 25.281971
+    },
+    {
+      "elapsedMs": 30007.809959000002,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3445,
+      "workerErrors": 0,
+      "outboxPending": 1704,
+      "outboxLagSeconds": 25.28677
+    },
+    {
+      "elapsedMs": 30516.293042,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3502,
+      "workerErrors": 0,
+      "outboxPending": 1644,
+      "outboxLagSeconds": 25.696066
+    },
+    {
+      "elapsedMs": 30518.522584000002,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3505,
+      "workerErrors": 0,
+      "outboxPending": 1644,
+      "outboxLagSeconds": 25.701743
+    },
+    {
+      "elapsedMs": 31023.05425,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3563,
+      "workerErrors": 0,
+      "outboxPending": 1584,
+      "outboxLagSeconds": 26.123179
+    },
+    {
+      "elapsedMs": 31024.639750000002,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3565,
+      "workerErrors": 0,
+      "outboxPending": 1584,
+      "outboxLagSeconds": 26.126205
+    },
+    {
+      "elapsedMs": 31538.053709000003,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3620,
+      "workerErrors": 0,
+      "outboxPending": 1524,
+      "outboxLagSeconds": 26.538674
+    },
+    {
+      "elapsedMs": 31541.540250000002,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3623,
+      "workerErrors": 0,
+      "outboxPending": 1524,
+      "outboxLagSeconds": 26.541872
+    },
+    {
+      "elapsedMs": 32054.158417000002,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3681,
+      "workerErrors": 0,
+      "outboxPending": 1464,
+      "outboxLagSeconds": 26.942038
+    },
+    {
+      "elapsedMs": 32055.573834,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3683,
+      "workerErrors": 0,
+      "outboxPending": 1464,
+      "outboxLagSeconds": 26.948641
+    },
+    {
+      "elapsedMs": 32566.364708999998,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3742,
+      "workerErrors": 0,
+      "outboxPending": 1404,
+      "outboxLagSeconds": 27.362769
+    },
+    {
+      "elapsedMs": 32567.299792,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3743,
+      "workerErrors": 0,
+      "outboxPending": 1404,
+      "outboxLagSeconds": 27.36518
+    },
+    {
+      "elapsedMs": 33071.427584,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3830,
+      "workerErrors": 0,
+      "outboxPending": 1314,
+      "outboxLagSeconds": 27.694664
+    },
+    {
+      "elapsedMs": 33071.613999999994,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3830,
+      "workerErrors": 0,
+      "outboxPending": 1314,
+      "outboxLagSeconds": 27.694745
+    },
+    {
+      "elapsedMs": 33577.422209,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3886,
+      "workerErrors": 0,
+      "outboxPending": 1284,
+      "outboxLagSeconds": 28.152601
+    },
+    {
+      "elapsedMs": 33579.865,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3886,
+      "workerErrors": 0,
+      "outboxPending": 1284,
+      "outboxLagSeconds": 28.152387
+    },
+    {
+      "elapsedMs": 34084.69175,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3942,
+      "workerErrors": 0,
+      "outboxPending": 1224,
+      "outboxLagSeconds": 28.520254
+    },
+    {
+      "elapsedMs": 34084.844874999995,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3943,
+      "workerErrors": 0,
+      "outboxPending": 1224,
+      "outboxLagSeconds": 28.522875
+    },
+    {
+      "elapsedMs": 34591.386667,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3993,
+      "workerErrors": 0,
+      "outboxPending": 1164,
+      "outboxLagSeconds": 28.924786
+    },
+    {
+      "elapsedMs": 34592.04375,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 3993,
+      "workerErrors": 0,
+      "outboxPending": 1164,
+      "outboxLagSeconds": 28.922388
+    },
+    {
+      "elapsedMs": 35098.498416999995,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4058,
+      "workerErrors": 0,
+      "outboxPending": 1104,
+      "outboxLagSeconds": 29.227288
+    },
+    {
+      "elapsedMs": 35098.606541999994,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4057,
+      "workerErrors": 0,
+      "outboxPending": 1104,
+      "outboxLagSeconds": 29.227288
+    },
+    {
+      "elapsedMs": 35608.013,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4110,
+      "workerErrors": 0,
+      "outboxPending": 1044,
+      "outboxLagSeconds": 29.116307
+    },
+    {
+      "elapsedMs": 35609.193499999994,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4110,
+      "workerErrors": 0,
+      "outboxPending": 1044,
+      "outboxLagSeconds": 29.115974
+    },
+    {
+      "elapsedMs": 36115.267374999996,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4175,
+      "workerErrors": 0,
+      "outboxPending": 984,
+      "outboxLagSeconds": 29.544096
+    },
+    {
+      "elapsedMs": 36116.18625,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4176,
+      "workerErrors": 0,
+      "outboxPending": 984,
+      "outboxLagSeconds": 29.54522
+    },
+    {
+      "elapsedMs": 36621.822167,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4237,
+      "workerErrors": 0,
+      "outboxPending": 924,
+      "outboxLagSeconds": 29.960303
+    },
+    {
+      "elapsedMs": 36622.855083999995,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4236,
+      "workerErrors": 0,
+      "outboxPending": 924,
+      "outboxLagSeconds": 29.960237
+    },
+    {
+      "elapsedMs": 37128.692749999995,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4295,
+      "workerErrors": 0,
+      "outboxPending": 864,
+      "outboxLagSeconds": 30.338255
+    },
+    {
+      "elapsedMs": 37128.932875,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4296,
+      "workerErrors": 0,
+      "outboxPending": 864,
+      "outboxLagSeconds": 30.336192
+    },
+    {
+      "elapsedMs": 37635.61225,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4349,
+      "workerErrors": 0,
+      "outboxPending": 804,
+      "outboxLagSeconds": 30.73714
+    },
+    {
+      "elapsedMs": 37638.496499999994,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4349,
+      "workerErrors": 0,
+      "outboxPending": 804,
+      "outboxLagSeconds": 30.739076
+    },
+    {
+      "elapsedMs": 38138.872584,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4418,
+      "workerErrors": 0,
+      "outboxPending": 744,
+      "outboxLagSeconds": 31.133537
+    },
+    {
+      "elapsedMs": 38141.154417,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4421,
+      "workerErrors": 0,
+      "outboxPending": 744,
+      "outboxLagSeconds": 31.135976
+    },
+    {
+      "elapsedMs": 38643.743334,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4474,
+      "workerErrors": 0,
+      "outboxPending": 684,
+      "outboxLagSeconds": 31.53824
+    },
+    {
+      "elapsedMs": 38645.661458999995,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4475,
+      "workerErrors": 0,
+      "outboxPending": 684,
+      "outboxLagSeconds": 31.540642
+    },
+    {
+      "elapsedMs": 39150.228041999995,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4530,
+      "workerErrors": 0,
+      "outboxPending": 624,
+      "outboxLagSeconds": 31.927446
+    },
+    {
+      "elapsedMs": 39150.603417,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4530,
+      "workerErrors": 0,
+      "outboxPending": 624,
+      "outboxLagSeconds": 31.928557
+    },
+    {
+      "elapsedMs": 39666.931083999996,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4585,
+      "workerErrors": 0,
+      "outboxPending": 564,
+      "outboxLagSeconds": 32.347096
+    },
+    {
+      "elapsedMs": 39667.060542,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4585,
+      "workerErrors": 0,
+      "outboxPending": 564,
+      "outboxLagSeconds": 32.347096
+    },
+    {
+      "elapsedMs": 40174.042666999994,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4643,
+      "workerErrors": 0,
+      "outboxPending": 504,
+      "outboxLagSeconds": 32.740364
+    },
+    {
+      "elapsedMs": 40174.67520899999,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4643,
+      "workerErrors": 0,
+      "outboxPending": 504,
+      "outboxLagSeconds": 32.740995
+    },
+    {
+      "elapsedMs": 40681.940167,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4704,
+      "workerErrors": 0,
+      "outboxPending": 444,
+      "outboxLagSeconds": 33.138916
+    },
+    {
+      "elapsedMs": 40682.513542,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4704,
+      "workerErrors": 0,
+      "outboxPending": 444,
+      "outboxLagSeconds": 33.139872
+    },
+    {
+      "elapsedMs": 41192.624584,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4763,
+      "workerErrors": 0,
+      "outboxPending": 384,
+      "outboxLagSeconds": 33.536809
+    },
+    {
+      "elapsedMs": 41193.240166999996,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4763,
+      "workerErrors": 0,
+      "outboxPending": 384,
+      "outboxLagSeconds": 33.535123
+    },
+    {
+      "elapsedMs": 41702.647542,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4823,
+      "workerErrors": 0,
+      "outboxPending": 324,
+      "outboxLagSeconds": 33.942852
+    },
+    {
+      "elapsedMs": 41703.174958999996,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4823,
+      "workerErrors": 0,
+      "outboxPending": 324,
+      "outboxLagSeconds": 33.941015
+    },
+    {
+      "elapsedMs": 42217.222624999995,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4880,
+      "workerErrors": 0,
+      "outboxPending": 264,
+      "outboxLagSeconds": 34.347058
+    },
+    {
+      "elapsedMs": 42219.637167,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4881,
+      "workerErrors": 0,
+      "outboxPending": 264,
+      "outboxLagSeconds": 34.346599
+    },
+    {
+      "elapsedMs": 42729.763125,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4942,
+      "workerErrors": 0,
+      "outboxPending": 204,
+      "outboxLagSeconds": 34.767636
+    },
+    {
+      "elapsedMs": 42731.622624999996,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 4943,
+      "workerErrors": 0,
+      "outboxPending": 204,
+      "outboxLagSeconds": 34.77156
+    },
+    {
+      "elapsedMs": 43233.716292,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 5019,
+      "workerErrors": 0,
+      "outboxPending": 144,
+      "outboxLagSeconds": 35.167297
+    },
+    {
+      "elapsedMs": 43235.810291999995,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 5019,
+      "workerErrors": 0,
+      "outboxPending": 144,
+      "outboxLagSeconds": 35.168508
+    },
+    {
+      "elapsedMs": 43740.261084,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 5088,
+      "workerErrors": 0,
+      "outboxPending": 84,
+      "outboxLagSeconds": 35.574526
+    },
+    {
+      "elapsedMs": 43740.371875,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 5088,
+      "workerErrors": 0,
+      "outboxPending": 84,
+      "outboxLagSeconds": 35.576422
+    },
+    {
+      "elapsedMs": 44245.835834,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 5141,
+      "workerErrors": 0,
+      "outboxPending": 20,
+      "outboxLagSeconds": 35.988784
+    },
+    {
+      "elapsedMs": 44247.730041999996,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 5142,
+      "workerErrors": 0,
+      "outboxPending": 20,
+      "outboxLagSeconds": 35.990466
+    },
+    {
+      "elapsedMs": 44756.458333999995,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 5144,
+      "workerErrors": 0,
+      "outboxPending": 0,
+      "outboxLagSeconds": 0
+    },
+    {
+      "elapsedMs": 44756.568999999996,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 5144,
+      "workerErrors": 0,
+      "outboxPending": 0,
+      "outboxLagSeconds": 0
+    },
+    {
+      "elapsedMs": 45268.254541999995,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 5144,
+      "workerErrors": 0,
+      "outboxPending": 0,
+      "outboxLagSeconds": 0
+    },
+    {
+      "elapsedMs": 45272.490374999994,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 5144,
+      "workerErrors": 0,
+      "outboxPending": 0,
+      "outboxLagSeconds": 0
+    },
+    {
+      "elapsedMs": 45276.384416999994,
+      "lockConflicts": 0,
+      "duplicates": 1999,
+      "retries": 0,
+      "published": 5144,
+      "workerErrors": 0,
+      "outboxPending": 0,
+      "outboxLagSeconds": 0
+    }
+  ],
+  "passed": true,
+  "monitorErrors": [],
+  "finishedAt": "2026-11-08T20:18:13.605Z"
+}
